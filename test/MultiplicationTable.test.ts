@@ -29,4 +29,17 @@ describe('Multiplication Table', () => {
     //then
     expect(rendered).toBe('')
   })
+
+  it('should have input between 1-10', () => {
+    // given
+    const table = new MultiplicationTable()
+    const start = 0
+    const end = 1
+
+    //when
+    const rendered = table.render(start, end)
+
+    //then
+    expect(rendered).toBe('')
+  })
 })
