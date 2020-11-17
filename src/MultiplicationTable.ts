@@ -31,7 +31,6 @@ class Expressions{
 function buildExpressions(start: number, end: number): Expressions[][]
 {
   const result : Expressions[][] = []
-  console.log('building expressions')
   for(let i = 0; i <= end - start; i++)
   {
     result[i] = []
@@ -39,7 +38,6 @@ function buildExpressions(start: number, end: number): Expressions[][]
     {
       //console.log("i = "+ i +" k = " + k)
       const expression = new Expressions(start + k, start + i, (start + i)*(start + k))
-      //console.log('result[' + (i-start) + "][" + (j-start)+"] is "+ result[i-start][j-start].product)
       result[i].push(expression)
     }
   }
@@ -47,19 +45,40 @@ function buildExpressions(start: number, end: number): Expressions[][]
 }
 function render(expressions: Expressions[][]): string
 {
-  let result = ''
-  for(let i = 0; i < expressions.length; i++)
+  const stringArr: string[] = []
+  const indexArr: number[] = []
+  stringArr[expressions.length - 1] = ''
+  for(let k = 0; k < expressions.length; k++)
   {
-    for(let k = 0; k <= i; k++)
+    indexArr[k] = stringArr[expressions.length - 1].length
+    stringArr[expressions.length - 1] += expressions[expressions.length - 1][k].factor1 + '*' + expressions[expressions.length - 1][k].factor2 + '=' + expressions[expressions.length - 1][k].product + '  '
+    //console.log("stringArr[last] = " + stringArr[expressions.length - 1])
+  }
+  for(let i = 0; i < expressions.length - 1;)
+  {
+    stringArr[i] = ''
+    for(let m = 0; m <= i; m++)
     {
-      //console.log("adding expressions[" + i + "][" + k + "]")
-      result += expressions[i][k].factor1 + '*' + expressions[i][k].factor2 + '=' + expressions[i][k].product + '  '
-      if(k === i && k !== expressions.length - 1)
+      //console.log("adding expressions[" + i + "][" + m + "]")
+      if(stringArr[i].length < indexArr[m])
       {
-        result = result.trimEnd()
-        result += '\n'
+        stringArr[i] += ' '
+      }
+      stringArr[i] += expressions[i][m].factor1 + '*' + expressions[i][m].factor2 + '=' + expressions[i][m].product + '  '
+      if(m === i)// && m!== expressions.length - 1
+      {
+        i++
+        break
+        //result = result.trimEnd()
+        //result += '\n'
       }
     }
+    //stringArr[i] = stringArr[i].trimEnd()
+  }
+  let result = stringArr[expressions.length - 1]
+  for(let j = expressions.length - 2; j >= 0; j--)
+  {
+    result = stringArr[j].trimEnd() + '\n' + result
   }
   result = result.trimEnd()
   return result
