@@ -52,28 +52,23 @@ function render(expressions: Expressions[][]): string
   {
     indexArr[k] = stringArr[expressions.length - 1].length
     stringArr[expressions.length - 1] += expressions[expressions.length - 1][k].factor1 + '*' + expressions[expressions.length - 1][k].factor2 + '=' + expressions[expressions.length - 1][k].product + '  '
-    //console.log("stringArr[last] = " + stringArr[expressions.length - 1])
   }
   for(let i = 0; i < expressions.length - 1;)
   {
     stringArr[i] = ''
     for(let m = 0; m <= i; m++)
     {
-      //console.log("adding expressions[" + i + "][" + m + "]")
-      if(stringArr[i].length < indexArr[m])
+      while(stringArr[i].length < indexArr[m])
       {
         stringArr[i] += ' '
       }
       stringArr[i] += expressions[i][m].factor1 + '*' + expressions[i][m].factor2 + '=' + expressions[i][m].product + '  '
-      if(m === i)// && m!== expressions.length - 1
+      if(m === i)
       {
         i++
         break
-        //result = result.trimEnd()
-        //result += '\n'
       }
     }
-    //stringArr[i] = stringArr[i].trimEnd()
   }
   let result = stringArr[expressions.length - 1]
   for(let j = expressions.length - 2; j >= 0; j--)
